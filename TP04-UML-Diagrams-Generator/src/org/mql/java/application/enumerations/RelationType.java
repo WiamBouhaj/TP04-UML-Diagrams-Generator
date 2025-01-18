@@ -1,9 +1,9 @@
 package org.mql.java.application.enumerations;
 
 public enum RelationType {
+	    ASSOCIATION,
 	    INHERITANCE,
 	    IMPLEMENTATION,
-	    ASSOCIATION,
 	    DEPENDENCY,
 	    AGGREGATION,
 	    COMPOSITION
