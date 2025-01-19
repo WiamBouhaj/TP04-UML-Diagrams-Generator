@@ -1,46 +1,58 @@
 package org.mql.java.application.parsers;
 
 import java.io.File;
+import java.util.List;
+import java.util.Vector;
 
 import org.mql.java.application.models.ClassModel;
 import org.mql.java.application.models.PackageModel;
+import org.mql.java.application.models.ProjectModel;
 
-
-//Introspection
 public class PackageExplorer {
-	    public PackageModel parse(File packageDir) {
-	    	PackageModel javaPackage = new PackageModel(packageDir.getName());
+    private List<String> classNames;
 
-	        for (File file : packageDir.listFiles()) {
-	            if (file.getName().endsWith(".class")) {
-	                String className = file.getName().replace(".class", "");
-	                ClassModel classModel = new ClassParser().parse(packageDir.getName(), className);
-	                javaPackage.addClass(classModel);
-	            }
-	        }
-	        return javaPackage;
-	    }
+    public PackageExplorer() {
+        classNames = new Vector<>();
+    }
+
+    public PackageModel parse(File directory) {
+        if (directory == null || !directory.exists() || !directory.isDirectory()) {
+            System.out.println("Le répertoire n'existe pas ou n'est pas valide.");
+            return null;
+        }
+        String packageName = directory.toPath()
+                .toAbsolutePath()
+                .toString()
+                .replace(File.separator, ".");
+
+          PackageModel packageModel = new PackageModel(packageName);
+
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".class")) {
+                    String className = packageName + "." + file.getName().replace(".class", "");
+                    classNames.add(className);
+
+                    // Ajout de la classe analysée au modèle de package
+                    ClassModel classModel = new ClassParser().parse(packageName, file.getName().replace(".class", ""));
+                    if (classModel != null) {
+                        packageModel.addClass(classModel);
+                    }
+                }
+            }
+        }
+
+        return packageModel;
+    }
+
+    public List<String> getClassNames() {
+        return classNames;
+    }
+    
+    public void addPackageToProject(ProjectModel project, PackageModel packageModel) {
+        if (project != null && packageModel != null) {
+            project.addPackage(packageModel);
+        }
+    }
 }
-//	public PackageExplorer() {
-//       scan("org.mql.java.application"); 	}
-//	
-//	public void scan(String packageName) {
-//		String classPath = System.getProperty("java.class.path");
-//		System.out.println(classPath);
-//		
-//		String packagePath = packageName.replace(".","\\");
-//		System.out.println(packagePath);
-//		
-//		String path = classPath +"\\"+ packagePath;
-//		File dir = new File(path);
-//		File content[]= dir.listFiles();
-//		for (int i=0 ; i< content.length; i++ ) {
-//			String name = packageName + "." + content[i].getName().replace(".class", "");
-//			System.out.println(" - "+ name);
-//			}
-//	}
-//
-//	public static void main(String[] args) {
-//		   new PackageExplorer();
-//	   }
-//}

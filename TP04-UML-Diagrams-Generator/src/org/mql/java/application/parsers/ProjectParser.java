@@ -1,65 +1,61 @@
 package org.mql.java.application.parsers;
 
 import java.io.File;
+import java.util.List;
+import java.util.Vector;
 
 import org.mql.java.application.models.PackageModel;
 import org.mql.java.application.models.ProjectModel;
+import org.mql.java.application.models.ClassModel;
 
 public class ProjectParser {
-
-	private String projectPath;
+    private String projectPath;
 
     public ProjectParser(String projectPath) {
         this.projectPath = projectPath;
     }
 
     public ProjectModel parse(String projectName) {
-    	ProjectModel project = new ProjectModel(projectName);
+    	
+        ProjectModel project = new ProjectModel(projectName);
+        List<ClassModel> classModels = project.getAllClasses(); // Implémentez cette méthode pour récupérer toutes les classes.
+
         File root = new File(projectPath);
 
         if (root.exists() && root.isDirectory()) {
+            // Parcours des sous-dossiers représentant des packages
             for (File packageDir : root.listFiles()) {
                 if (packageDir.isDirectory()) {
-                    PackageModel javaPackage = new PackageExplorer().parse(packageDir);
-                    project.addPackage(javaPackage);
+                    // Convertit le chemin en nom de package
+                    String packageName = packageDir.getAbsolutePath()
+                        .replace(projectPath + File.separator, "") // Retire le chemin racine
+                        .replace(File.separator, "."); // Convertit les séparateurs en '.'
+
+                    // Utilise PackageExplorer pour analyser le package
+                    PackageExplorer explorer = new PackageExplorer();
+                    explorer.parse(packageDir);
+
+                    // Crée un PackageModel avec les classes trouvées
+                    PackageModel packageModel = new PackageModel(packageName);
+                    for (String className : explorer.getClassNames()) {
+                        // Sépare le package et le nom de la classe
+                        String simpleClassName = className.substring(className.lastIndexOf('.') + 1);
+
+                        // Analyse la classe avec ClassParser
+                        ClassModel classModel = new ClassParser().parse(packageName, simpleClassName);
+                        if (classModel != null) {
+                            packageModel.addClass(classModel);
+                        }
+                    }
+
+                    // Ajoute le package au projet
+                    project.addPackage(packageModel);
                 }
             }
+        } else {
+            System.out.println("Le répertoire " + projectPath + " n'existe pas ou n'est pas un répertoire valide.");
         }
+
         return project;
     }
 }
-
-
-//    public void parseProject(String projectPath) throws ClassNotFoundException {
-//        File root = new File(projectPath);
-//        scanDirectory(root);
-//    }
-//
-//    private void scanDirectory(File directory) throws ClassNotFoundException {
-//        for (File file : directory.listFiles()) {
-//            if (file.isDirectory()) {
-//                scanDirectory(file);
-//            } else if (file.getName().endsWith(".class")) {
-//                analyzeClass(file);
-//            }
-//        }
-//    }
-//
-//    private void analyzeClass(File file) throws ClassNotFoundException {
-//        String className = getClassNameFromFile(file);
-//        Class<?> clazz = Class.forName(className);
-//
-//        // Analyse des attributs et méthodes
-//        for (Field field : clazz.getDeclaredFields()) {
-//            System.out.println("Field: " + field.getName());
-//        }
-//        for (Method method : clazz.getDeclaredMethods()) {
-//            System.out.println("Method: " + method.getName());
-//        }
-//    }
-//
-//    private String getClassNameFromFile(File file) {
-//        String path = file.getPath();
-//        return path.replace("/", ".").replace(".class", "");
-//    }
-//}

@@ -2,6 +2,7 @@ package org.mql.java.test.classes;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 import org.mql.java.application.models.ClassModel;
 import org.mql.java.application.models.FieldModel;
@@ -11,16 +12,19 @@ import org.mql.java.application.models.ProjectModel;
 import org.mql.java.application.models.RelationModel;
 import org.mql.java.application.parsers.ClassParser;
 import org.mql.java.application.parsers.PackageExplorer;
+import org.mql.java.application.parsers.ProjectParser;
 import org.mql.java.application.parsers.RelationParser;
 
-public class Examples {
+public class Examples2 {
 
-	public Examples() {
-	}
+	    public Examples2() {
+	    }
+
 	    public static void main(String[] args) {
 	        // Répertoire de test
 	    	File testDir = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
-
+	    	String projectPath = "C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin";  
+	        
 	        // Test complet
 	        System.out.println("==== Test Complet ====");
 
@@ -41,47 +45,30 @@ public class Examples {
 	                System.out.println("  Méthode : " + method.getName() +
 	                                   ", Retour : " + method.getReturnType() +
 	                                   ", Visibilité : " + method.getVisibility());
-	            }
-	        }
+	            } String projectName = "MonProjet";  
 
-	        // 2. Test de PackageExplorer
-	        System.out.println("\n** Test PackageExplorer **");
-	        PackageExplorer explorer = new PackageExplorer();
-	        PackageModel packageModel = explorer.parse(testDir);
+	            // Étape 1 : Charger le projet  
+	            ProjectParser projectParser = new ProjectParser(projectPath);  
+	            ProjectModel project = projectParser.parse(projectName);  
 
-	        if (packageModel != null) {
-	            System.out.println("Package : " + packageModel.getName());
-	            for (ClassModel cls : packageModel.getClasses()) {
-	                System.out.println("  Classe : " + cls.getName());
-	            }
-	        }
+	            if (project != null) {  
+	                // Étape 2 : Analyser les relations  
+	                RelationParser relationParser = new RelationParser();  
+	                List<RelationModel> relations = relationParser.parseRelations(project.getAllClasses());  
 
-	     // 3. Test de RelationParser
-	        System.out.println("\n** Test RelationParser **");
-	        RelationParser relationParser = new RelationParser();
-	        List<RelationModel> allRelations = relationParser.parseRelations(packageModel.getClasses()); // Passez toute la liste
-
-	        // Affichage des relations
-	        for (ClassModel cls : packageModel.getClasses()) {
-	            System.out.println("Classe : " + cls.getName());
-	            for (RelationModel relation : cls.getRelations()) {
-	                System.out.println("  Relation : " + relation.getType() +
-	                                   " -> " + relation.getTarget().getName());
-	            }
-	        }
-
-
-	        // 4. Test d'intégration avec ProjectModel
-	        System.out.println("\n** Test ProjectModel **");
-	        ProjectModel project = new ProjectModel("org.mql.java.application");
-	        project.addPackage(packageModel);
-
-	        System.out.println("Projet : " + project.getName());
-	        for (PackageModel pkg : project.getPackages()) {
-	            System.out.println("Package : " + pkg.getName());
-	            for (ClassModel cls : pkg.getClasses()) {
-	                System.out.println("  Classe : " + cls.getName());
-	            }
-	        }
-	    }
+	             // Étape 3 : Afficher les relations  
+	                if (relations.isEmpty()) {  
+	                    System.out.println("Aucune relation trouvée.");  
+	                } else {  
+	                    System.out.println("Relations trouvées : ");  
+	                    for (RelationModel relation : relations) {  
+	                        System.out.printf("%s %s %s%n",   
+	                                          relation.getSource().getName(),   
+	                                          relation.getType(),   
+	                                          relation.getTarget().getName());  
+	                    }  
+	                }
+	        }  
+	    }  
+	}
 }

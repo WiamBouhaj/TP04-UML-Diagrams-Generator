@@ -7,4 +7,5 @@ public enum RelationType {
 	    DEPENDENCY,
 	    AGGREGATION,
 	    COMPOSITION
+	    //, USES
 }

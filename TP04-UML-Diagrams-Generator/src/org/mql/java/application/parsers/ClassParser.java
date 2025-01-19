@@ -10,6 +10,8 @@ import org.mql.java.application.enumerations.Visibility;
 import org.mql.java.application.models.ClassModel;
 import org.mql.java.application.models.FieldModel;
 import org.mql.java.application.models.MethodModel;
+import org.mql.java.application.models.RelationModel;
+import org.mql.java.application.enumerations.RelationType;
 
 public class ClassParser {
     private Class<?> cls;
@@ -20,6 +22,10 @@ public class ClassParser {
             // Charger la classe
             this.cls = Class.forName(packageName + "." + className);
             this.classModel = new ClassModel(cls.getSimpleName(), packageName);
+            this.classModel.setVisibility(mapVisibility(cls.getModifiers()));
+
+            // Ajouter le nom du package
+            this.classModel.setPackageName(cls.getPackageName());
 
             // Héritage (superclass)
             if (cls.getSuperclass() != null) {
@@ -40,6 +46,9 @@ public class ClassParser {
                 ClassModel innerClassModel = parse(innerClass.getPackageName(), innerClass.getSimpleName());
                 classModel.getInternClasses().add(innerClassModel);
             }
+
+            // Extraction des interfaces
+            parseInterfaces(cls, classModel);
 
             return classModel;
         } catch (ClassNotFoundException e) {
@@ -77,6 +86,13 @@ public class ClassParser {
         }
     }
 
+    // Extraire les interfaces implémentées
+    private void parseInterfaces(Class<?> cls, ClassModel classModel) {
+        for (Class<?> iface : cls.getInterfaces()) {
+            classModel.getInterfaces().add(iface);
+        }
+    }
+
     // Mapper les modificateurs à l'énumération Visibility
     private Visibility mapVisibility(int modifiers) {
         if (Modifier.isPublic(modifiers)) return Visibility.PUBLIC;
@@ -85,13 +101,8 @@ public class ClassParser {
         return Visibility.DEFAULT;
     }
 
-    // Méthode utilitaire pour récupérer les types des paramètres
     private List<Class<?>> getParameterTypes(Method method) {
-        List<Class<?>> parameters = new ArrayList<>();
-        for (Class<?> paramType : method.getParameterTypes()) {
-            parameters.add(paramType);
-        }
-        return parameters;
+        return List.of(method.getParameterTypes());
     }
 
     // Méthodes pour obtenir les modificateurs sous forme de chaîne (si nécessaire)
@@ -102,4 +113,5 @@ public class ClassParser {
     private String getModifier(int modifier) {
         return Modifier.toString(modifier);
     }
+
 }

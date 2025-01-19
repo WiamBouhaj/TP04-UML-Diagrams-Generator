@@ -12,7 +12,10 @@ public class RelationModel {
 	        this.source = source;
 	        this.target = target;
 	    }
-
+	    public RelationModel() {
+	    	super();
+	    }
+	    
 	    public RelationType getType() {
 	        return type;
 	    }
@@ -36,4 +39,10 @@ public class RelationModel {
 	    public void setTarget(ClassModel target) {
 	        this.target = target;
 	    }
+	    
+	    public void addRelation(ClassModel sourceClass, ClassModel targetClass, RelationType relationType) {
+	        RelationModel relation = new RelationModel(relationType, sourceClass, targetClass);
+	        sourceClass.addRelation(relation);
+	    }
+	    
 }
