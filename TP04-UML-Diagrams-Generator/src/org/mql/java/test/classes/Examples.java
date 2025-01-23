@@ -11,6 +11,7 @@ import org.mql.java.application.models.ProjectModel;
 import org.mql.java.application.models.RelationModel;
 import org.mql.java.application.parsers.ClassParser;
 import org.mql.java.application.parsers.PackageExplorer;
+import org.mql.java.application.parsers.ProjectParser;
 import org.mql.java.application.parsers.RelationParser;
 
 public class Examples {
@@ -18,8 +19,9 @@ public class Examples {
 	public Examples() {
 	}
 	    public static void main(String[] args) {
+	    
 	        // Répertoire de test
-	    	File testDir = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
+	    	File projectDirectory = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
 
 	        // Test complet
 	        System.out.println("==== Test Complet ====");
@@ -45,43 +47,16 @@ public class Examples {
 	        }
 
 	        // 2. Test de PackageExplorer
+	        // 2. Test de PackageExplorer
 	        System.out.println("\n** Test PackageExplorer **");
-	        PackageExplorer explorer = new PackageExplorer();
-	        PackageModel packageModel = explorer.parse(testDir);
+	        ProjectParser projectExplorer = new ProjectParser();
+	        ProjectModel projectModel = projectExplorer.parse(projectDirectory);
 
-	        if (packageModel != null) {
-	            System.out.println("Package : " + packageModel.getName());
-	            for (ClassModel cls : packageModel.getClasses()) {
-	                System.out.println("  Classe : " + cls.getName());
-	            }
-	        }
-
-	     // 3. Test de RelationParser
-	        System.out.println("\n** Test RelationParser **");
-	        RelationParser relationParser = new RelationParser();
-	        List<RelationModel> allRelations = relationParser.parseRelations(packageModel.getClasses()); // Passez toute la liste
-
-	        // Affichage des relations
-	        for (ClassModel cls : packageModel.getClasses()) {
-	            System.out.println("Classe : " + cls.getName());
-	            for (RelationModel relation : cls.getRelations()) {
-	                System.out.println("  Relation : " + relation.getType() +
-	                                   " -> " + relation.getTarget().getName());
-	            }
-	        }
-
-
-	        // 4. Test d'intégration avec ProjectModel
-	        System.out.println("\n** Test ProjectModel **");
-	        ProjectModel project = new ProjectModel("org.mql.java.application");
-	        project.addPackage(packageModel);
-
-	        System.out.println("Projet : " + project.getName());
-	        for (PackageModel pkg : project.getPackages()) {
-	            System.out.println("Package : " + pkg.getName());
-	            for (ClassModel cls : pkg.getClasses()) {
-	                System.out.println("  Classe : " + cls.getName());
-	            }
-	        }
-	    }
-}
+	        if (projectModel != null) {
+	            System.out.println("Projet analysé : " + projectModel.getName());
+	            projectModel.getPackages().forEach(pkg -> {
+	                System.out.println("Package : " + pkg.getName());
+	                pkg.getClasses().forEach(cls -> System.out.println("  Classe : " + cls.getName()));
+	            });
+    
+}}}

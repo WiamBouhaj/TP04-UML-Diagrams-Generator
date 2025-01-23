@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.mql.java.application.enumerations.Visibility;
 import org.mql.java.application.models.ClassModel;
@@ -21,8 +22,10 @@ public class ClassParser {
         try {
             // Charger la classe
             this.cls = Class.forName(packageName + "." + className);
-            this.classModel = new ClassModel(cls.getSimpleName(), packageName);
-            this.classModel.setVisibility(mapVisibility(cls.getModifiers()));
+            this.classModel = new ClassModel(cls.getSimpleName(), null, packageName, null,   
+                    new Vector<>(), new Vector<>(),   
+                    new Vector<>(), new Vector<>(),   
+                    new Vector<>());  this.classModel.setVisibility(mapVisibility(cls.getModifiers()));
 
             // Ajouter le nom du package
             this.classModel.setPackageName(cls.getPackageName());
@@ -31,7 +34,7 @@ public class ClassParser {
             if (cls.getSuperclass() != null) {
                 classModel.setSuperClass(new ClassModel(
                         cls.getSuperclass().getSimpleName(),
-                        cls.getSuperclass().getPackageName()
+                        null, cls.getSuperclass().getPackageName(), classModel, null, null, null, null, null
                 ));
             }
 

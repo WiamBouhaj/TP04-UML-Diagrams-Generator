@@ -31,6 +31,7 @@ public class PackageExplorer {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".class")) {
+                	
                     String className = packageName + "." + file.getName().replace(".class", "");
                     classNames.add(className);
 
@@ -55,4 +56,5 @@ public class PackageExplorer {
             project.addPackage(packageModel);
         }
     }
+    
 }

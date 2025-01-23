@@ -10,6 +10,7 @@ public class PackageModel {
     private List<EnumerationModel> enumerations = new Vector<>();
     private List<AnnotationModel> annotations = new Vector<>();
     private List<RelationModel> relations = new Vector<>();
+    private List<PackageModel> subPackages = new Vector<>();;
 
     public PackageModel(String name) {
         this.name = name;
@@ -18,9 +19,11 @@ public class PackageModel {
         this.enumerations = enumerations;
         this.annotations = annotations;
     }
-    
+    public PackageModel() {}
+	
 	public PackageModel(String name, List<ClassModel> classes, List<InterfaceModel> interfaces,
-			List<EnumerationModel> enumerations, List<AnnotationModel> annotations, List<RelationModel> relations) {
+			List<EnumerationModel> enumerations, List<AnnotationModel> annotations, List<RelationModel> relations,
+			List<PackageModel> subPackages) {
 		super();
 		this.name = name;
 		this.classes = classes;
@@ -28,9 +31,8 @@ public class PackageModel {
 		this.enumerations = enumerations;
 		this.annotations = annotations;
 		this.relations = relations;
+		this.subPackages = subPackages;
 	}
-
-
 	public String getName() {
 		return name;
 	}
@@ -84,4 +86,13 @@ public class PackageModel {
             classes.add(classModel);
         }
     }
+	public void addPackage(PackageModel packageModel) {
+        subPackages.add(packageModel);
+    }
+	public List<PackageModel> getSubPackages() {
+		return subPackages;
+	}
+	public void setSubPackages(List<PackageModel> subPackages) {
+		this.subPackages = subPackages;
+	}
 }

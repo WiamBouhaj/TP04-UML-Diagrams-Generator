@@ -1,5 +1,7 @@
 package org.mql.java.application.models;
 
+import java.lang.reflect.Field;
+
 import org.mql.java.application.enumerations.Visibility;
 
 public class FieldModel {
@@ -16,6 +18,15 @@ public class FieldModel {
         this.isStatic = isStatic;
         this.isFinal = isFinal;
     }
+    
+    public FieldModel(Field field) {
+        this.name = field.getName();
+        this.type = field.getType().getSimpleName();
+        this.visibility = getVisibilityFromModifiers(field.getModifiers());
+        this.isStatic = java.lang.reflect.Modifier.isStatic(field.getModifiers());
+        this.isFinal = java.lang.reflect.Modifier.isFinal(field.getModifiers());
+    }
+
 
 	public String getName() {
 		return name;
@@ -55,6 +66,17 @@ public class FieldModel {
 
 	public void setFinal(boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+	private Visibility getVisibilityFromModifiers(int modifiers) {
+	    if (java.lang.reflect.Modifier.isPublic(modifiers)) {
+	        return Visibility.PUBLIC;
+	    } else if (java.lang.reflect.Modifier.isProtected(modifiers)) {
+	        return Visibility.PROTECTED;
+	    } else if (java.lang.reflect.Modifier.isPrivate(modifiers)) {
+	        return Visibility.PRIVATE;
+	    } else {
+	        return Visibility.DEFAULT;
+	    }
 	}
 
 }
