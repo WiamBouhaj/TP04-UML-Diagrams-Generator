@@ -11,11 +11,11 @@ public class RelationTest {
 
     public static void main(String[] args) {
         // Chemin vers le projet à analyser
-        String projectPath = "C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin"; // Remplacez par le chemin de votre projet
+        File projectPath = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin"); // Remplacez par le chemin de votre projet
 
         // Charger les classes du projet
         ProjectParser projectParser = new ProjectParser(projectPath);
-        ProjectModel project = projectParser.parse("TP04-UML-Diagrams-Generator");  // Passez le nom du projet à la place du chemin
+        ProjectModel project = projectParser.parse(projectPath);  // Passez le nom du projet à la place du chemin
 
         // Obtenez les classes à partir du modèle du projet
         List<ClassModel> classModels = project.getAllClasses(); // Supposons que cette méthode existe dans ProjectModel

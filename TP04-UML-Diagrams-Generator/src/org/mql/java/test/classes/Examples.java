@@ -21,15 +21,15 @@ public class Examples {
 	    public static void main(String[] args) {
 	    
 	        // Répertoire de test
-	    	File projectDirectory = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
+	    	File projectDirectory = new File("C:\\JAVA-MQL\\p04-xml-parsors\\bin");
 
 	        // Test complet
 	        System.out.println("==== Test Complet ====");
 
 	        // 1. Test de ClassParser
 	        System.out.println("** Test ClassParser **");
-	        ClassParser classParser = new ClassParser();
-	        ClassModel classModel = classParser.parse("org.mql.java.application.models", "ClassModel");
+	        ClassParser classParser = new ClassParser(null);
+	        ClassModel classModel = classParser.parse(projectDirectory,"C:\\JAVA-MQL\\p04-xml-parsors\\bin\\org\\mql\\java\\xml", "AuthorsParser");
 
 	        if (classModel != null) {
 	            System.out.println("Classe : " + classModel.getName());
@@ -48,7 +48,7 @@ public class Examples {
 
 	        // 2. Test de PackageExplorer
 	        System.out.println("\n** Test PackageExplorer **");
-	        ProjectParser projectExplorer = new ProjectParser();
+	        ProjectParser projectExplorer = new ProjectParser(projectDirectory);
 	        ProjectModel projectModel = projectExplorer.parse(projectDirectory);
 
 	        if (projectModel != null) {

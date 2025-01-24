@@ -9,13 +9,13 @@ public class MethodModel {
 	    private String returnType;
 	    private Visibility visibility; 
 	   // private List<String> parameters;
-	    private List<Class<?>> parameters;
+	    private List<String> parameters;
 
-	    public MethodModel(String name, String returnType, Visibility visibility, List<Class<?>> parameters) {
+	    public MethodModel(String name, String returnType, Visibility visibility, List<String> list) {
 	        this.name = name;
 	        this.returnType = returnType;
 	        this.visibility = visibility;
-	        this.parameters = parameters;
+	        this.parameters = list;
 	    }
 
 		public String getName() {
@@ -42,11 +42,11 @@ public class MethodModel {
 			this.visibility = visibility;
 		}
 
-		public List<Class<?>> getParameters() {
+		public List<String> getParameters() {
 			return parameters;
 		}
 
-		public void setParameters(List<Class<?>> parameters) {
+		public void setParameters(List<String> parameters) {
 			this.parameters = parameters;
 		}
 

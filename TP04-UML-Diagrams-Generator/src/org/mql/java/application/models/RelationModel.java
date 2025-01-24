@@ -1,18 +1,23 @@
 package org.mql.java.application.models;
 
+import org.mql.java.application.enumerations.Cardinality;
 import org.mql.java.application.enumerations.RelationType;
 
 public class RelationModel {
 	    private RelationType type;
 	    private ClassModel source;
 	    private ClassModel target;
+        private Cardinality cardinality;
 
-	    public RelationModel(RelationType type, ClassModel source, ClassModel target) {
-	        this.type = type;
-	        this.source = source;
-	        this.target = target;
-	    }
-	    public RelationModel() {
+	    public RelationModel(RelationType type, ClassModel source, ClassModel target, Cardinality cardinality) {
+			super();
+			this.type = type;
+			this.source = source;
+			this.target = target;
+			this.setCardinality(cardinality);
+		}
+
+		public RelationModel() {
 	    	super();
 	    }
 	    
@@ -40,9 +45,17 @@ public class RelationModel {
 	        this.target = target;
 	    }
 	    
-	    public void addRelation(ClassModel sourceClass, ClassModel targetClass, RelationType relationType) {
-	        RelationModel relation = new RelationModel(relationType, sourceClass, targetClass);
-	        sourceClass.addRelation(relation);
+	    @Override
+	    public String toString() {
+	        return "Relation : " + type + " avec " + target.getName();
 	    }
-	    
+
+		public Cardinality getCardinality() {
+			return cardinality;
+		}
+
+		public void setCardinality(Cardinality cardinality) {
+			this.cardinality = cardinality;
+		}
+
 }

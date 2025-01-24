@@ -68,25 +68,7 @@ public class ProjectModel {
 		this.packages = packages;
 	}
 
-//	public void addPackageToProject(ProjectModel project, PackageModel packageModel) {
-//        project.addPackage(packageModel);
-//    }
-	
-	// Ajouter un package via un projet
-//    public void addPackageToProject(ProjectModel project, PackageModel packageModel) {
-//        if (project != null && packageModel != null) {
-//            project.addPackage(packageModel);
-//        }
-//    }
 
-    // Récupérer toutes les classes du projet
-//    public List<ClassModel> getAllClasses() {
-//        List<ClassModel> allClasses = new Vector<>();
-//        for (PackageModel pk : packages) {
-//            allClasses.addAll(pk.getClasses());
-//        }
-//        return allClasses;
-//    }
 	
 	public List<ClassModel> getAllClasses() {
 	    List<ClassModel> allClasses = new Vector<>();

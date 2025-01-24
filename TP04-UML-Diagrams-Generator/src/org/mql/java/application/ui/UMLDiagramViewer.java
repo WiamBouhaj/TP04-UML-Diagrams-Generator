@@ -73,7 +73,7 @@ public class UMLDiagramViewer extends JFrame {
 	    
 	    public static void main(String[] args) {
 	        // Créez et affichez l'interface graphique
-	        ProjectModel project = new ProjectModel("Mon Projet UML"); // Remplacez ceci par votre modèle de projet réel
+	        ProjectModel project = new ProjectModel("C:\\JAVA-MQL\\p03_reflection_and_annotations\\bin"); // Remplacez ceci par votre modèle de projet réel
 	        UMLDiagramViewer viewer = new UMLDiagramViewer("Visualiseur UML", project);
 	        viewer.setVisible(true);
 	    }

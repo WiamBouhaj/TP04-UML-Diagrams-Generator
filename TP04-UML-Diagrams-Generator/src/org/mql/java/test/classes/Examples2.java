@@ -22,8 +22,9 @@ public class Examples2 {
 	    
 		    public static void main(String[] args) {
 		        File projectDirectory = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
-
-		       ProjectParser projectExplorer = new ProjectParser();
+		        //File projectDirectory = new File("C:\\JAVA-MQL\\p04-xml-parsors\\bin");
+		       
+		        ProjectParser projectExplorer = new ProjectParser(projectDirectory);
 		        ProjectModel projectModel = projectExplorer.parse(projectDirectory);
 
 		        if (projectModel != null) {

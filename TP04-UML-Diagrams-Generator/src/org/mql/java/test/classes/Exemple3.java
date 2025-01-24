@@ -20,9 +20,10 @@ public class Exemple3 {
 	}
 	    public static void main(String[] args) {
 	    	    // Répertoire de test : chemin racine où se trouvent les classes compilées
-	    	    File testDir = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
+	    	    //File testDir = new File("C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin");
 	    	    //File testDir = new File("C:\\JAVA-MQL\\p04-xml-parsors\\bin");
-
+	     	    File testDir = new File("C:\\JAVA-MQL\\p03_reflection_and_annotations\\bin");
+	    	    
 	    	    if (!testDir.exists() || !testDir.isDirectory()) {
 	    	        System.out.println("Le répertoire de test n'existe pas ou n'est pas valide : " + testDir.getPath());
 	    	        return;
