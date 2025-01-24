@@ -1,9 +1,11 @@
 package org.mql.java.application.parsers;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,17 +17,35 @@ import org.mql.java.application.models.RelationModel;
 import org.mql.java.application.enumerations.RelationType;
 
 public class ClassParser {
+
     private Class<?> cls;
     public ClassModel classModel;
 
-    public ClassModel parse(String packageName, String className) {
+    public ClassModel parse(File directory, String packageName, String className) {
         try {
-            // Charger la classe
-            this.cls = Class.forName(packageName + "." + className);
-            this.classModel = new ClassModel(cls.getSimpleName(), null, packageName, null,   
-                    new Vector<>(), new Vector<>(),   
-                    new Vector<>(), new Vector<>(),   
-                    new Vector<>());  this.classModel.setVisibility(mapVisibility(cls.getModifiers()));
+            // Convertir le répertoire en URL
+            URL classDirectoryURL = directory.toURI().toURL();
+
+            // Créer un URLClassLoader avec l'URL du répertoire
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{classDirectoryURL});
+
+            // Charger la classe depuis le ClassLoader
+            String fullClassName = packageName + "." + className;
+            this.cls = classLoader.loadClass(fullClassName);
+
+            // Créer le modèle de la classe
+            this.classModel = new ClassModel(
+                    cls.getSimpleName(),
+                    null,
+                    packageName,
+                    null,
+                    new Vector<>(),
+                    new Vector<>(),
+                    new Vector<>(),
+                    new Vector<>(),
+                    new Vector<>()
+            );
+            this.classModel.setVisibility(mapVisibility(cls.getModifiers()));
 
             // Ajouter le nom du package
             this.classModel.setPackageName(cls.getPackageName());
@@ -34,7 +54,14 @@ public class ClassParser {
             if (cls.getSuperclass() != null) {
                 classModel.setSuperClass(new ClassModel(
                         cls.getSuperclass().getSimpleName(),
-                        null, cls.getSuperclass().getPackageName(), classModel, null, null, null, null, null
+                        null,
+                        cls.getSuperclass().getPackageName(),
+                        classModel,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
                 ));
             }
 
@@ -46,7 +73,7 @@ public class ClassParser {
 
             // Extraction des classes internes
             for (Class<?> innerClass : cls.getDeclaredClasses()) {
-                ClassModel innerClassModel = parse(innerClass.getPackageName(), innerClass.getSimpleName());
+                ClassModel innerClassModel = parse(directory, innerClass.getPackageName(), innerClass.getSimpleName());
                 classModel.getInternClasses().add(innerClassModel);
             }
 
@@ -54,7 +81,7 @@ public class ClassParser {
             parseInterfaces(cls, classModel);
 
             return classModel;
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -107,14 +134,4 @@ public class ClassParser {
     private List<Class<?>> getParameterTypes(Method method) {
         return List.of(method.getParameterTypes());
     }
-
-    // Méthodes pour obtenir les modificateurs sous forme de chaîne (si nécessaire)
-    public String getModifier() {
-        return Modifier.toString(cls.getModifiers());
-    }
-
-    private String getModifier(int modifier) {
-        return Modifier.toString(modifier);
-    }
-
 }

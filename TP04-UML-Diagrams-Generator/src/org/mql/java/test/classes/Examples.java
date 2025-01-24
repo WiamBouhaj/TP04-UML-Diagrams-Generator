@@ -47,7 +47,6 @@ public class Examples {
 	        }
 
 	        // 2. Test de PackageExplorer
-	        // 2. Test de PackageExplorer
 	        System.out.println("\n** Test PackageExplorer **");
 	        ProjectParser projectExplorer = new ProjectParser();
 	        ProjectModel projectModel = projectExplorer.parse(projectDirectory);

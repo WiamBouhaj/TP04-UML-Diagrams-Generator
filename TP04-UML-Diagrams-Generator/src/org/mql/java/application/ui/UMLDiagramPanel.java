@@ -66,7 +66,7 @@ public class UMLDiagramPanel extends JPanel {
     public static void main(String[] args) {
         // Création d'une instance de ClassParser et analyse d'une classe
         ClassParser classParser = new ClassParser();
-        ClassModel classModel = classParser.parse("org.mql.java.application.models", "FieldModel");
+        ClassModel classModel = classParser.parse(null, "org.mql.java.application.models", "ClassModel");
 
         // Création de la liste des classes à afficher
         List<ClassModel> classes = List.of(classModel);
