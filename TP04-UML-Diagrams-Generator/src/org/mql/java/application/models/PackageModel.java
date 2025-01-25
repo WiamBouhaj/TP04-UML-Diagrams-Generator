@@ -12,6 +12,8 @@ public class PackageModel {
         this.classes = new Vector<>();
     }
 
+    public PackageModel() {}
+    
     public PackageModel(String name, List<ClassModel> classes) {
         this.name = name;
         this.classes = classes;
@@ -33,7 +35,11 @@ public class PackageModel {
         this.classes.add(classModel);
     }
 
-    @Override
+    public void setClasses(List<ClassModel> classes) {
+		this.classes = classes;
+	}
+
+	@Override
     public String toString() {
         return "PackageModel{" +
                 "name='" + name + '\'' +

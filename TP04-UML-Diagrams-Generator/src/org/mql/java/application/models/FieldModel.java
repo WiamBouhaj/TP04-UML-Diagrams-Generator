@@ -19,6 +19,8 @@ public class FieldModel {
         this.isFinal = isFinal;
     }
     
+    public FieldModel() {}
+    
     public FieldModel(Field field) {
         this.name = field.getName();
         this.type = field.getType().getSimpleName();
@@ -26,7 +28,19 @@ public class FieldModel {
         this.isStatic = java.lang.reflect.Modifier.isStatic(field.getModifiers());
         this.isFinal = java.lang.reflect.Modifier.isFinal(field.getModifiers());
     }
-
+ // Méthode pour obtenir une représentation textuelle du champ  
+    public String getRepresentation() {  
+        StringBuilder rep = new StringBuilder();  
+        rep.append(visibility);  
+        rep.append(" ").append(name).append(" : ").append(type);  
+        if (isStatic) {  
+            rep.append(" [static]");  
+        }  
+        if (isFinal) {  
+            rep.append(" [final]");  
+        }  
+        return rep.toString();  
+    }  
 
 	public String getName() {
 		return name;

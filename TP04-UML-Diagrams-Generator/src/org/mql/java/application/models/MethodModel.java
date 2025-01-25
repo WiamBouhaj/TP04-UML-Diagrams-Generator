@@ -11,6 +11,8 @@ public class MethodModel {
 	   // private List<String> parameters;
 	    private List<String> parameters;
 
+	    public MethodModel() {}
+	    
 	    public MethodModel(String name, String returnType, Visibility visibility, List<String> list) {
 	        this.name = name;
 	        this.returnType = returnType;
@@ -18,6 +20,15 @@ public class MethodModel {
 	        this.parameters = list;
 	    }
 
+	 // Méthode pour obtenir une représentation textuelle de la méthode  
+	    public String getRepresentation() {  
+	        StringBuilder rep = new StringBuilder();  
+	        rep.append(visibility).append(" ").append(name).append("(");  
+	        rep.append(String.join(", ", parameters));  
+	        rep.append(") : ").append(returnType);  
+	        return rep.toString();  
+	    }  
+	    
 		public String getName() {
 			return name;
 		}

@@ -17,7 +17,7 @@ public class ClassModel {
     private List<Class<?>> interfaces = new Vector<>();
     private List<RelationModel> relations = new Vector<>();
 
-
+    public ClassModel() {}
 
     public ClassModel(String name, String packageName) {
         this.name = name;

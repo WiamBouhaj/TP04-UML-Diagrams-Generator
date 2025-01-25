@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnnotationModel {
-	 private String name;
+	
+	private String name;
 	 //a confirmer ou non
 	    private RetentionPolicy retentionPolicy;
 	    private boolean isInherited;
@@ -47,6 +48,16 @@ public class AnnotationModel {
 
 	public RetentionPolicy getRetentionPolicy() {
 		return retentionPolicy;
+	}
+
+
+	public Map<String, String> getAttributes() {
+		return attributes;
+	}
+
+
+	public void setAttributes(Map<String, String> attributes) {
+		this.attributes = attributes;
 	}
 
 
