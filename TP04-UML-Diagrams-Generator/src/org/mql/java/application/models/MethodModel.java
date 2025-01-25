@@ -8,7 +8,6 @@ public class MethodModel {
 	    private String name;
 	    private String returnType;
 	    private Visibility visibility; 
-	   // private List<String> parameters;
 	    private List<String> parameters;
 
 	    public MethodModel() {}
@@ -20,7 +19,6 @@ public class MethodModel {
 	        this.parameters = list;
 	    }
 
-	 // Méthode pour obtenir une représentation textuelle de la méthode  
 	    public String getRepresentation() {  
 	        StringBuilder rep = new StringBuilder();  
 	        rep.append(visibility).append(" ").append(name).append("(");  

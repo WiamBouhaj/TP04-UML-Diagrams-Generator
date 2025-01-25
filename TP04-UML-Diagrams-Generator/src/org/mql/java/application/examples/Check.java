@@ -13,7 +13,7 @@ public class Check implements Payment {
 
     @Override  
     public void processPayment() {  
-        // Implémentation pour traiter le paiement par chèque  
+        
     }
 
 	public String getName() {

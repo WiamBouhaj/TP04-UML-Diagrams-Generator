@@ -11,13 +11,13 @@ import org.mql.java.application.models.PackageModel;
 import org.mql.java.application.models.ProjectModel;
 
 public class PackageExplorer {
-    private File rootDirectory; // Répertoire racine du projet
+    private File rootDirectory; 
     private URLClassLoader classLoader;
     public PackageExplorer(File rootDirectory) {
         this.rootDirectory = rootDirectory;
         try {  
-            URL url = rootDirectory.toURI().toURL(); // Obtenir l'URL du répertoire  
-            this.classLoader = new URLClassLoader(new URL[]{url}); // Initialiser le classLoader  
+            URL url = rootDirectory.toURI().toURL(); 
+            this.classLoader = new URLClassLoader(new URL[]{url}); 
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
@@ -29,17 +29,15 @@ public class PackageExplorer {
             return null;
         }
 
-        // Chemin relatif pour le package
         String packageName = directory.getPath()
             .replace(rootDirectory.getPath(), "")
             .replace(File.separator, ".")
-            .replaceFirst("^\\.", ""); // Retire le "." initial
+            .replaceFirst("^\\.", ""); 
 
         if (packageName.startsWith("bin.")) {
-            packageName = packageName.substring(4); // Supprime "bin."
+            packageName = packageName.substring(4); 
         }
 
-        // Créer le modèle de package
         PackageModel packageModel = new PackageModel(packageName);
 
         File[] files = directory.listFiles();
@@ -48,7 +46,6 @@ public class PackageExplorer {
                 if (file.isDirectory()) {
                    
                 } else if (file.isFile() && file.getName().endsWith(".class")) {
-                    // Charger la classe
                     String className = file.getName().replace(".class", "");
                     ClassModel classModel = new ClassParser(classLoader).parse(directory, packageName, className);
                     if (classModel != null) {
@@ -61,7 +58,6 @@ public class PackageExplorer {
         return packageModel;
     }
 
-    // Méthode pour ajouter un package au projet
     public void addPackageToProject(ProjectModel project, PackageModel packageModel) {
         if (project != null && packageModel != null) {
             project.addPackage(packageModel);

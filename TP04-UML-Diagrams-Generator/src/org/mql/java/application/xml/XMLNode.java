@@ -20,12 +20,10 @@ import org.w3c.dom.NodeList;
 public class XMLNode {
     private Node node;
 
-    // Constructeur à partir d'un nœud XML
     public XMLNode(Node node) {
         this.node = node;
     }
 
-    // Constructeur à partir d'un fichier XML
     public XMLNode(String source) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
         try {
@@ -42,7 +40,7 @@ public class XMLNode {
     public XMLNode firstChild() {
 		return children().get(0);
 	}
-    // Retourne tous les enfants du nœud sous forme de liste de XMLNode
+    
     public List<XMLNode> children() {
         List<XMLNode> list = new ArrayList<>();
         NodeList n1 = node.getChildNodes();
@@ -56,12 +54,10 @@ public class XMLNode {
         return list;
     }
 
-    // Retourne le nom du nœud
     public String getName() {
         return node.getNodeName();
     }
 
-    // Retourne la valeur du nœud (si un seul enfant texte)
     public String getValue() {
         NodeList list = node.getChildNodes();
         if (list.getLength() == 1 && list.item(0).getNodeType() == Node.TEXT_NODE) {
@@ -70,7 +66,6 @@ public class XMLNode {
         return null;
     }
 
-    // Retourne un enfant spécifique par son nom
     public XMLNode child(String name) {
         List<XMLNode> children = children();
         for (XMLNode child : children) {
@@ -81,13 +76,11 @@ public class XMLNode {
         return null;
     }
 
-    // Retourne la valeur d'un attribut par son nom
     public String attribute(String name) {
         NamedNodeMap atts = node.getAttributes();
         return atts.getNamedItem(name) != null ? atts.getNamedItem(name).getNodeValue() : null;
     }
 
-    // Retourne la valeur d'un attribut sous forme d'entier
     public int intAttribute(String name) {
         String att = attribute(name);
         try {
@@ -97,7 +90,6 @@ public class XMLNode {
         }
     }
 
-    // Méthode pour parser un PackageInfo à partir du nœud XML
     public PackageModel parsePackage() {
         PackageModel packageInfo = new PackageModel();
         XMLNode nameNode = child("name");
@@ -118,11 +110,10 @@ public class XMLNode {
             }
         }
 
-        packageInfo.setClasses(classes);  // Correction du setClasses
+        packageInfo.setClasses(classes); 
         return packageInfo;
     }
 
-    // Méthode pour parser un ClassInfo à partir du nœud XML
     public ClassModel parseClass() {
         ClassModel classInfo = new ClassModel();
         XMLNode nameNode = child("name");
@@ -184,31 +175,27 @@ public class XMLNode {
     public MethodModel parseMethod() {
         MethodModel methodInfo = new MethodModel();
 
-        // Extraire le nom de la méthode
         XMLNode nameNode = child("name");
         if (nameNode != null) {
             methodInfo.setName(nameNode.getValue());
         }
 
-        // Extraire le type de retour de la méthode
         XMLNode returnTypeNode = child("returnType");
         if (returnTypeNode != null) {
             methodInfo.setReturnType(returnTypeNode.getValue());
         }
-
-        // Extraire la visibilité de la méthode (public, private, etc.)
+        
         XMLNode visibilityNode = child("visibility");
         if (visibilityNode != null) {
             methodInfo.setVisibility(getVisibilityFromXML(visibilityNode));
         }
 
-        // Extraire les paramètres de la méthode
         List<String> parametersList = new ArrayList<>();
         XMLNode parametersNode = child("parameters");
         if (parametersNode != null) {
             List<XMLNode> paramNodes = parametersNode.children();
             for (XMLNode paramNode : paramNodes) {
-                String paramType = paramNode.getValue(); // Suppose que chaque paramètre est un type
+                String paramType = paramNode.getValue(); 
                 parametersList.add(paramType);
             }
         }
@@ -217,29 +204,24 @@ public class XMLNode {
         return methodInfo;
     }
     
- // Méthode pour parser un FieldInfo à partir du nœud XML
     public FieldModel parseField() {
         FieldModel fieldInfo = new FieldModel();
 
-        // Extraire le nom du champ
         XMLNode nameNode = child("name");
         if (nameNode != null) {
             fieldInfo.setName(nameNode.getValue());
         }
 
-        // Extraire le type du champ
         XMLNode typeNode = child("type");
         if (typeNode != null) {
             fieldInfo.setType(typeNode.getValue());
         }
-
-        // Extraire la visibilité du champ (public, private, etc.)
+        
         XMLNode visibilityNode = child("visibility");
         if (visibilityNode != null) {
             fieldInfo.setVisibility(getVisibilityFromXML(visibilityNode));
         }
 
-        // Extraire les attributs statiques et finals
         XMLNode staticNode = child("isStatic");
         if (staticNode != null) {
             fieldInfo.setStatic(Boolean.parseBoolean(staticNode.getValue()));

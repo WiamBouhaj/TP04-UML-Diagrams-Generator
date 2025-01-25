@@ -10,7 +10,6 @@ import java.util.Map;
 public class AnnotationModel {
 	
 	private String name;
-	 //a confirmer ou non
 	    private RetentionPolicy retentionPolicy;
 	    private boolean isInherited;
 	    private Map<String, String> attributes;

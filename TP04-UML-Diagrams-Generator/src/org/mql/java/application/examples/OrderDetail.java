@@ -3,7 +3,7 @@ package org.mql.java.application.examples;
 public class OrderDetail {  
     private int quantity;  
     private String taxStatus;  
-    private Item item; // Association  
+    private Item item;  
 
     public double calcSubTotal() {  
         return item.getPriceForQuantity(quantity);  

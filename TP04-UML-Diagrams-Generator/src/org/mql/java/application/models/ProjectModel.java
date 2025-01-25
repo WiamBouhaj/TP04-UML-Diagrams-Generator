@@ -16,19 +16,6 @@ public class ProjectModel {
         relations = new Vector<>();
     }
 
-//    
-//	public ProjectModel(String name, List<PackageModel> packages) {
-//		//super();
-//		this.name = name;
-//		this.packages = packages;
-//	}
-	
-//	public ProjectModel(String name, List<PackageModel> packages) {
-//        this.name = name;
-//        this.packages = packages != null ? packages : new Vector<>();
-//    }
-
-
 	public String getName() {
 		return name;
 	}

@@ -10,8 +10,7 @@ public class Cash implements Payment {
     }  
 
     @Override  
-    public void processPayment() {  
-        // Implémentation pour traiter le paiement en espèces  
+    public void processPayment() {   
     }
 
 	public double getCashTendered() {

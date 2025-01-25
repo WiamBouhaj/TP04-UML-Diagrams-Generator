@@ -6,16 +6,13 @@
             <field final="false" name="amount" static="false" type="double" visibility="PRIVATE"/>
         </fields>
         <methods>
-            <method name="getCashTendered" returnType="double" visibility="PUBLIC"/>
             <method name="processPayment" returnType="void" visibility="PUBLIC"/>
             <method name="setCashTendered" returnType="void" visibility="PUBLIC"/>
+            <method name="getCashTendered" returnType="double" visibility="PUBLIC"/>
             <method name="setAmount" returnType="void" visibility="PUBLIC"/>
             <method name="getAmount" returnType="double" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Cash" target="double" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Cash" target="double" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Check">
         <fields>
@@ -35,12 +32,7 @@
             <method name="setBankID" returnType="void" visibility="PUBLIC"/>
             <method name="getBankID" returnType="String" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Check" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Check" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Check" target="boolean" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Check" target="double" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Credit">
         <fields>
@@ -59,17 +51,11 @@
             <method name="setType" returnType="void" visibility="PUBLIC"/>
             <method name="setAmount" returnType="void" visibility="PUBLIC"/>
             <method name="getAmount" returnType="double" visibility="PUBLIC"/>
-            <method name="getExpDate" returnType="String" visibility="PUBLIC"/>
             <method name="setNumber" returnType="void" visibility="PUBLIC"/>
+            <method name="getExpDate" returnType="String" visibility="PUBLIC"/>
             <method name="setExpDate" returnType="void" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Credit" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Credit" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Credit" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Credit" target="double" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Credit" target="boolean" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Customer">
         <fields>
@@ -82,10 +68,7 @@
             <method name="getAddress" returnType="String" visibility="PUBLIC"/>
             <method name="setAddress" returnType="void" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Customer" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Customer" target="String" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Item">
         <fields>
@@ -93,17 +76,14 @@
             <field final="false" name="description" static="false" type="String" visibility="PRIVATE"/>
         </fields>
         <methods>
+            <method name="setDescription" returnType="void" visibility="PUBLIC"/>
             <method name="getShippingWeight" returnType="double" visibility="PUBLIC"/>
             <method name="setShippingWeight" returnType="void" visibility="PUBLIC"/>
             <method name="getDescription" returnType="String" visibility="PUBLIC"/>
-            <method name="setDescription" returnType="void" visibility="PUBLIC"/>
             <method name="getPriceForQuantity" returnType="double" visibility="PUBLIC"/>
             <method name="getWeight" returnType="double" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Item" target="double" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Item" target="String" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Order">
         <fields>
@@ -112,21 +92,17 @@
             <field final="false" name="orderDetails" static="false" type="List" visibility="PRIVATE"/>
         </fields>
         <methods>
-            <method name="setOrderDetails" returnType="void" visibility="PUBLIC"/>
             <method name="getOrderDetails" returnType="List" visibility="PUBLIC"/>
             <method name="calcTotalWeight" returnType="double" visibility="PUBLIC"/>
-            <method name="calcTotal" returnType="double" visibility="PUBLIC"/>
-            <method name="setDate" returnType="void" visibility="PUBLIC"/>
-            <method name="calcTax" returnType="double" visibility="PUBLIC"/>
+            <method name="setOrderDetails" returnType="void" visibility="PUBLIC"/>
             <method name="setStatus" returnType="void" visibility="PUBLIC"/>
-            <method name="getStatus" returnType="String" visibility="PUBLIC"/>
             <method name="getDate" returnType="String" visibility="PUBLIC"/>
+            <method name="calcTax" returnType="double" visibility="PUBLIC"/>
+            <method name="setDate" returnType="void" visibility="PUBLIC"/>
+            <method name="calcTotal" returnType="double" visibility="PUBLIC"/>
+            <method name="getStatus" returnType="String" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="Order" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="Order" target="String" type="AGGREGATION"/>
-            <relation cardinality="MANY" source="Order" target="List" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="OrderDetail">
         <fields>
@@ -136,19 +112,15 @@
         </fields>
         <methods>
             <method name="getItem" returnType="Item" visibility="PUBLIC"/>
-            <method name="getTaxStatus" returnType="String" visibility="PUBLIC"/>
             <method name="setTaxStatus" returnType="void" visibility="PUBLIC"/>
+            <method name="getTaxStatus" returnType="String" visibility="PUBLIC"/>
             <method name="calcSubTotal" returnType="double" visibility="PUBLIC"/>
             <method name="getQuantity" returnType="int" visibility="PUBLIC"/>
             <method name="setQuantity" returnType="void" visibility="PUBLIC"/>
             <method name="setItem" returnType="void" visibility="PUBLIC"/>
             <method name="calcWeight" returnType="double" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="OrderDetail" target="int" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="OrderDetail" target="String" type="AGGREGATION"/>
-            <relation cardinality="ONE" source="OrderDetail" target="Item" type="AGGREGATION"/>
-        </relations>
+        <relations/>
     </class>
     <class name="Payment">
         <fields/>
@@ -169,11 +141,6 @@
             <method name="values" returnType="PaymentStatus[]" visibility="PUBLIC"/>
             <method name="valueOf" returnType="PaymentStatus" visibility="PUBLIC"/>
         </methods>
-        <relations>
-            <relation cardinality="ONE" source="PaymentStatus" target="PaymentStatus" type="COMPOSITION"/>
-            <relation cardinality="ONE" source="PaymentStatus" target="PaymentStatus" type="COMPOSITION"/>
-            <relation cardinality="ONE" source="PaymentStatus" target="PaymentStatus" type="COMPOSITION"/>
-            <relation cardinality="MANY" source="PaymentStatus" target="PaymentStatus[]" type="COMPOSITION"/>
-        </relations>
+        <relations/>
     </class>
 </project>

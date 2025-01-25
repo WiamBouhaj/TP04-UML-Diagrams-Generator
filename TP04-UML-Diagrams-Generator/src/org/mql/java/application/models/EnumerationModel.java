@@ -2,7 +2,7 @@ package org.mql.java.application.models;
 
 public class EnumerationModel {
 	private String name;
-    //val
+  
     public EnumerationModel(String name) {
         this.name = name;
     }

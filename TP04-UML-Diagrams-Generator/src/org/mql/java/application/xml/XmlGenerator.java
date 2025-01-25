@@ -21,31 +21,11 @@ public class XmlGenerator {
 	    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 	    Document doc = docBuilder.newDocument();
 
-	    // Ajout d'un élément racine si le document est vide
-	    Element rootElement = doc.createElement("project");  // Racine par exemple "project"
+	    Element rootElement = doc.createElement("project");  
 	    doc.appendChild(rootElement);
 
 	    return doc;
 	}
-    // Ajoute une classe au document XML sous forme d'élément
-//    public static void addClassToXML(Document doc, ClassModel classModel) {
-//        Element classElement = doc.createElement("class");
-//        doc.getDocumentElement().appendChild(classElement);
-//        
-//        classElement.setAttribute("name", classModel.getName());
-//        classElement.setAttribute("visibility", classModel.getVisibility().toString());
-//
-//        if (classModel.getSuperClass() != null) {
-//            Element superClassElement = doc.createElement("superClass");
-//            superClassElement.appendChild(doc.createTextNode(classModel.getSuperClass().getName()));
-//            classElement.appendChild(superClassElement);
-//        }
-//
-//        // Ajouter les champs, méthodes, relations, etc.
-//        createFieldsElement(doc, classModel, classElement);
-//        createMethodsElement(doc, classModel, classElement);
-//        createRelationsElement(doc, classModel, classElement);
-//    }
     
 	public static void addClassToXML(Document doc, ClassModel classModel) {
 	    System.out.println("Ajout de la classe : " + classModel.getName());
@@ -62,18 +42,15 @@ public class XmlGenerator {
 
 	    System.out.println("Classe ajoutée au XML : " + classModel.getName());
 
-	    // Ajouter des champs, méthodes, etc.
 	    createFieldsElement(doc, classModel, classElement);
 	    createMethodsElement(doc, classModel, classElement);
 	    createRelationsElement(doc, classModel, classElement);
 	}
 
-	 // Méthode pour créer un élément de champ
     private static void createFieldsElement(Document doc, ClassModel classModel, Element classElement) {
         Element fieldsElement = doc.createElement("fields");
         classElement.appendChild(fieldsElement);
 
-        // Ajouter les champs pour la classe
         for (FieldModel field : classModel.getFields()) {
             Element fieldElement = doc.createElement("field");
             fieldElement.setAttribute("name", field.getName());
@@ -85,7 +62,6 @@ public class XmlGenerator {
         }
     }
 
-    // Crée et ajoute les méthodes d'une classe dans le XML
     private static void createMethodsElement(Document doc, ClassModel classModel, Element classElement) {
         Element methodsElement = doc.createElement("methods");
         classElement.appendChild(methodsElement);
@@ -98,12 +74,10 @@ public class XmlGenerator {
         }
     }
 
- // Méthode pour créer un élément de relation
     private static void createRelationsElement(Document doc, ClassModel classModel, Element classElement) {
         Element relationsElement = doc.createElement("relations");
         classElement.appendChild(relationsElement);
 
-        // Ajouter les relations pour la classe
         for (RelationModel relation : classModel.getRelations()) {
             Element relationElement = doc.createElement("relation");
             relationElement.setAttribute("type", relation.getType().toString());
@@ -113,11 +87,9 @@ public class XmlGenerator {
             relationsElement.appendChild(relationElement);
         }
     }
-    // Sauvegarde le document XML dans un fichier
- // Exemple de sauvegarde dans un fichier
     public static void saveXMLToFile(Document doc, String filePath) throws TransformerException {
         File file = new File(filePath);
-        file.getParentFile().mkdirs();  // Crée les répertoires si nécessaires
+        file.getParentFile().mkdirs();  
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -129,8 +101,6 @@ public class XmlGenerator {
         System.out.println("XML file saved to: " + file.getAbsolutePath());
     }
 
-
-    // Méthode pour afficher le XML à la console (pour débogage)
     public static void printXML(Document doc) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();

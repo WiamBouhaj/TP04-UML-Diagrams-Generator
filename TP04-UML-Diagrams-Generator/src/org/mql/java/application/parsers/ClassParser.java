@@ -20,8 +20,8 @@ import org.mql.java.application.enumerations.Visibility;
 public class ClassParser {  
     private URLClassLoader classLoader;  
 
-    public ClassParser(URLClassLoader classLoader) {  // Modifié pour recevoir un classLoader  
-        this.classLoader = classLoader;  // Initialise classLoader  
+    public ClassParser(URLClassLoader classLoader) {  
+        this.classLoader = classLoader;    
     }  
 
     public ClassModel parse(File directory, String packageName, String className) {  
@@ -30,11 +30,9 @@ public class ClassParser {
             return null;  
         }  
         try {  
-            // Construction du nom complet de la classe  
             String fullClassName = packageName + "." + className;  
             Class<?> cls = classLoader.loadClass(fullClassName);  
-            
-            // Création du modèle de classe  
+              
             ClassModel classModel = new ClassModel(  
                     cls.getSimpleName(),  
                     null,  
@@ -48,18 +46,16 @@ public class ClassParser {
             );  
 
             classModel.setVisibility(mapVisibility(cls.getModifiers()));  
-
-            // Ajout de la classe super   
+  
             Class<?> superClass = cls.getSuperclass();  
             if (superClass != null && superClass != Object.class) {  
                 ClassModel superClassModel = parse(directory, superClass.getPackage().getName(), superClass.getSimpleName());  
                 classModel.setSuperClass(superClassModel);  
             }  
-
-            // Extraction des champs et méthodes  
+ 
             parseFields(cls, classModel);  
             parseMethods(cls, classModel);  
-
+            parseRelations(cls, classModel);
             return classModel;  
 
         } catch (ClassNotFoundException e) {  
@@ -94,8 +90,7 @@ public class ClassParser {
 		            mapVisibility(method.getModifiers()),  
 		            getParameterTypes(method)  
 		    );  
-		    classModel.getMethods().add(methodModel);  
-		    //parseRelations(cls, classModel);  
+		    classModel.getMethods().add(methodModel);   
 		}  
 		}  
 		

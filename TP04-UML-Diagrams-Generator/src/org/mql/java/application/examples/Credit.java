@@ -13,8 +13,7 @@ public class Credit implements Payment {
     }  
 
     @Override  
-    public void processPayment() {  
-        // Implémentation pour traiter le paiement par carte de crédit  
+    public void processPayment() {   
     }
 
 	public String getNumber() {

@@ -16,27 +16,19 @@ import org.w3c.dom.Element;
 public class XMLGeneratorTest {
 
 	    public static void main(String[] args) throws MalformedURLException {
-	        // Spécifiez le répertoire contenant les classes compilées du projet
-	        String classesPath = "C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin"; // Remplacez par votre chemin
-	        
-	        // Spécifiez le chemin du package à analyser
-	        String packagePath = "org.mql.java.application.examples"; // Remplacez par votre package
+	        String classesPath = "C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\bin";
+	      
+	        String packagePath = "org.mql.java.application.examples"; 
 
-	        // Spécifiez le fichier XML où vous souhaitez sauvegarder le résultat
-	        String outputXMLPath = "C:\\Users\\WIAM\\git\\repository\\TP04-UML-Diagrams-Generator\\src\\resources\\File.xml";
+	       String outputXMLPath = "resources/File.xml";
 	        	
-
-	        // Initialisation du ClassParser avec un class loader
-	        File projectDirectory = new File(classesPath);
-	        URL[] urls = { projectDirectory.toURI().toURL() };  // Spécifiez le chemin vers les classes
+           File projectDirectory = new File(classesPath);
+	        URL[] urls = { projectDirectory.toURI().toURL() };  
 	        URLClassLoader classLoader = new URLClassLoader(urls);
 	        ClassParser classParser = new ClassParser(classLoader);
 
 	        try {
-	            // Création du modèle XML pour toutes les classes du package
-	            org.w3c.dom.Document xmlDoc = XmlGenerator.createEmptyDocument(); // Crée un document XML vide
-
-	            // Analyse de toutes les classes du package
+	            org.w3c.dom.Document xmlDoc = XmlGenerator.createEmptyDocument(); 
 	            File packageDir = new File(classesPath + "\\" + packagePath.replace('.', '\\'));
 	            File[] classFiles = packageDir.listFiles((dir, name) -> name.endsWith(".class"));
 
@@ -48,12 +40,10 @@ public class XMLGeneratorTest {
 	                    if (classModel != null) {
 	                        System.out.println("Classe trouvée : " + classModel.getName());
 
-	                        // Ajouter les données de la classe au document XML
 	                        XmlGenerator.addClassToXML(xmlDoc, classModel);
 	                    }
 	                }
 
-	                // Sauvegarder le fichier XML à l'emplacement spécifié
 	                XmlGenerator.saveXMLToFile(xmlDoc, outputXMLPath);
 	                System.out.println("XML généré et sauvegardé à : " + outputXMLPath);
 	            } else {

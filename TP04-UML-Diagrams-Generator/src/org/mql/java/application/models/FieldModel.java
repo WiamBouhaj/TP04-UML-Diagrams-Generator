@@ -28,7 +28,7 @@ public class FieldModel {
         this.isStatic = java.lang.reflect.Modifier.isStatic(field.getModifiers());
         this.isFinal = java.lang.reflect.Modifier.isFinal(field.getModifiers());
     }
- // Méthode pour obtenir une représentation textuelle du champ  
+
     public String getRepresentation() {  
         StringBuilder rep = new StringBuilder();  
         rep.append(visibility);  

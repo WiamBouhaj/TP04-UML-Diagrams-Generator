@@ -19,13 +19,12 @@ public class XMLParser {
     private XMLNode xmlNode;
 
     public XMLParser(String path) {
-        this.xmlNode = new XMLNode(path); // Charger le fichier XML avec XMLNode
+        this.xmlNode = new XMLNode(path);
     }
 
     public PackageModel parse() {
-        // Récupérer le nœud principal du package
         PackageModel myPackage = new PackageModel("");        
-        XMLNode mainPackage = xmlNode.firstChild(); // Récupère le premier enfant (package principal)
+        XMLNode mainPackage = xmlNode.firstChild(); 
         myPackage = parsePackageRecursively(mainPackage);
         
         return myPackage;
@@ -34,12 +33,10 @@ public class XMLParser {
     private PackageModel parsePackageRecursively(XMLNode node) {
         PackageModel myPackage = new PackageModel(node.attribute("name"));
         
-        // Initialiser les listes pour contenir les classes, annotations, etc.
         List<ClassModel> packageClasses = new ArrayList<>();
         List<AnnotationModel> packageAnnotations = new ArrayList<>();
         List<RelationModel> relations = new ArrayList<>();
         
-        // Récupérer les sous-nœuds enfants du package (classes, annotations, etc.)
         List<XMLNode> children = node.children() != null ? node.children() : new ArrayList<>();
 
         for (XMLNode child : children) {
@@ -56,8 +53,6 @@ public class XMLParser {
         }
         
         myPackage.setClasses(packageClasses);
-//        myPackage.setRelations(relations);
-//        myPackage.setAnnotations(packageAnnotations);
         
         return myPackage;
     }
@@ -65,7 +60,6 @@ public class XMLParser {
     private ClassModel parseClass(XMLNode node) {
         ClassModel classModel = new ClassModel(node.attribute("name"), node.attribute("package"));
         
-        // Parsing les champs de la classe
         List<FieldModel> fields = new ArrayList<>();
         XMLNode fieldsNode = node.child("fields");
         List<XMLNode> fieldNodes = fieldsNode != null ? fieldsNode.children() : new ArrayList<>();
@@ -80,7 +74,6 @@ public class XMLParser {
         }
         classModel.setFields(fields);
 
-        // Parsing les méthodes de la classe
         List<MethodModel> methods = new ArrayList<>();
         XMLNode methodsNode = node.child("methods");
         List<XMLNode> methodNodes = methodsNode != null ? methodsNode.children() : new ArrayList<>();
@@ -99,7 +92,6 @@ public class XMLParser {
         }
         classModel.setMethods(methods);
         
-        // Parsing des relations de la classe (par exemple, héritage, composition)
         List<RelationModel> relations = new ArrayList<>();
         XMLNode relationsNode = node.child("relations");
         List<XMLNode> relationNodes = relationsNode != null ? relationsNode.children() : new ArrayList<>();
@@ -116,7 +108,6 @@ public class XMLParser {
         String name = node.attribute("name");
         AnnotationModel annotationModel = new AnnotationModel(name);
         
-        // Récupération des attributs de l'annotation
         XMLNode attributesNode = node.child("attributes");
         List<XMLNode> attributeNodes = attributesNode != null ? attributesNode.children() : new ArrayList<>();
         for (XMLNode attributeNode : attributeNodes) {

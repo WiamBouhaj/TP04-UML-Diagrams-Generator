@@ -5,16 +5,14 @@ import java.util.List;
 public class Order {  
     private String date;  
     private String status;  
-    private List<OrderDetail> orderDetails; // Association  
+    private List<OrderDetail> orderDetails; 
 
-    public double calcTax() {  
-        // Exemple de calcul de taxe  
-        return 0.0; // Implémentez le calcul réel  
+    public double calcTax() {    
+        return 0.0;  
     }  
 
-    public double calcTotal() {  
-        // Exemple de calcul de total  
-        return 0.0; // Implémentez le calcul réel  
+    public double calcTotal() {    
+        return 0.0;  
     }  
 
     public double calcTotalWeight() {  

@@ -10,7 +10,6 @@ public class ClassModel {
 	private Visibility visibility; 
     private String packageName;
 	private ClassModel superClass;
-	//private List<Constructor> constructors = new Vector<>();
     private List<FieldModel> fields = new Vector<>();
     private List<MethodModel> methods = new Vector<>();
     private List<ClassModel> internClasses = new Vector<>();

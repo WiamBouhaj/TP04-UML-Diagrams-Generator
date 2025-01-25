@@ -5,8 +5,7 @@ public class Item {
     private String description;  
 
     public double getPriceForQuantity(int quantity) {  
-        // Implémentez pour retourner le prix basé sur la quantité  
-        return 0.0; // retourne le prix calculé  
+         return 0.0;  
     }  
 
     public double getWeight() {  
